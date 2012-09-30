@@ -6,6 +6,8 @@
 var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
+  , login = require('./routes/login')
+  , register = require('./routes/register')
   , photos = require('./routes/photos')
   , helpers = require('./helpers')
   , http = require('http')
@@ -57,6 +59,11 @@ app.configure('development', function(){
 app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/photos', photos.list);
+app.get('/login', login.form);
+app.post('/login', login.submit);
+app.get('/logout', login.logout);
+app.get('/register', register.form);
+app.post('/register', register.submit);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
