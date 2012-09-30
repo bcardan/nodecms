@@ -23,7 +23,7 @@ app.engine('md', function(path, options, fn){
       });
       fn(null, html);
     } catch (err) {
-fn(err); }
+  fn(err); }
 }); });
 
 app.configure(function(){
