@@ -6,6 +6,7 @@
 var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
+  , photos = require('./routes/photos')
   , http = require('http')
   , path = require('path')
   , md = require('github-flavored-markdown').parse
@@ -46,9 +47,7 @@ app.configure('development', function(){
 
 app.get('/', routes.index);
 app.get('/users', user.list);
-app.get('/feed', function(){
-  res.render('rss.ejs');
-});
+app.get('/photos', photos.list);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
