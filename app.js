@@ -7,9 +7,24 @@ var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , md = require('github-flavored-markdown').parse
+  , fs = require('fs');
 
 var app = express();
+
+app.engine('md', function(path, options, fn){
+  fs.readFile(path, 'utf8', function(err, str){
+    if (err) return fn(err);
+    try {
+      var html = md(str);
+      html = html.replace(/\{([^}]+)\}/g, function(_, name){
+        return options[name] || '';
+      });
+      fn(null, html);
+    } catch (err) {
+fn(err); }
+}); });
 
 app.configure(function(){
   app.set('port', process.env.PORT || 80);
@@ -31,6 +46,9 @@ app.configure('development', function(){
 
 app.get('/', routes.index);
 app.get('/users', user.list);
+app.get('/feed', function(){
+  res.render('rss.ejs');
+});
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
