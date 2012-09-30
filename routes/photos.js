@@ -15,6 +15,16 @@ photos.push({
 	path: '3.png'
 });
 
+photos.push({
+	name: 'four',
+	path: '4.png'
+});
+
+photos.push({
+	name: 'five',
+	path: '5.png'
+});
+
 exports.list = function(req, res){
   res.render('photos', {
     title: 'Photos',
