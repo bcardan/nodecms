@@ -7,12 +7,21 @@ var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
   , photos = require('./routes/photos')
+  , helpers = require('./helpers')
   , http = require('http')
   , path = require('path')
   , md = require('github-flavored-markdown').parse
   , fs = require('fs');
 
 var app = express();
+
+var i18n = {
+    prev: 'Prev'
+  , next: 'Next'
+  , save: 'Save'
+};
+app.locals(i18n);
+app.locals(helpers);
 
 app.engine('md', function(path, options, fn){
   fs.readFile(path, 'utf8', function(err, str){
